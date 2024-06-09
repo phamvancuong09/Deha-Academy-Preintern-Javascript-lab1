@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký du lịch</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            font-size: 17px;
+            background-color: rgb(175, 203, 72);
+        }
+        h1 {
+            text-align: center;
+            font-size: 30px;
+        }
+        #lang-select :hover {
+            background-color: rgb(22, 22, 195);
+            color: #0d5298;
+            overflow: auto;
+        }
+        #outset {
+            border-style: outset;
+        }
+        textarea {
+            width: 100%;
+            height: 60px;
+            resize: none;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+
+            let name = document.forms["travelForm"]["txtHoTen"].value;
+            let address = document.forms["travelForm"]["txtDiaChi"].value;
+            let phone = document.forms["travelForm"]["txtSdt"].value;
+            let adults = document.forms["travelForm"]["people"].value;
+            let children = document.forms["travelForm"]["Children"].value;
+            let checkbox = document.forms["travelForm"]["ckKhachHang"].checked;
+            let phonePattern = /^(03|05|07|08|09)\d{8}$/;
+
+            let valid = true;
+
+            if (name == "") {
+                document.getElementById('nameError').innerHTML = "Họ và Tên không được để trống";
+                valid = false;
+            } else {
+                document.getElementById('nameError').innerHTML = "";
+            }
+
+            if (address == "") {
+                document.getElementById('addressError').innerHTML = "Địa chỉ không được để trống";
+                valid = false;
+            } else {
+                document.getElementById('addressError').innerHTML = "";
+            }
+
+            if (phone == "") {
+                document.getElementById('phoneError').innerHTML = "Điện Thoại không được để trống";
+                valid = false;
+            } else if (!phonePattern.test(phone)) {
+                document.getElementById('phoneError').innerHTML = "Điện Thoại phải là số điện thoại Việt Nam hợp lệ";
+                valid = false;
+            } else {
+                document.getElementById('phoneError').innerHTML = "";
+            }
+
+            if (adults == "" || isNaN(adults) || parseInt(adults) <= 0) {
+                document.getElementById('adultsError').innerHTML = "Số lượng người lớn phải là số dương";
+                valid = false;
+            } else {
+                document.getElementById('adultsError').innerHTML = "";
+            }
+
+            if (children == "" || isNaN(children) || parseInt(children) < 0) {
+                document.getElementById('childrenError').innerHTML = "Số lượng trẻ em phải là số không âm";
+                valid = false;
+            } else {
+                document.getElementById('childrenError').innerHTML = "";
+            }
+
+            if (!checkbox) {
+                document.getElementById('checkboxError').innerHTML = "Vui lòng xác nhận bạn là khách Việt Nam";
+                valid = false;
+            } else {
+                document.getElementById('checkboxError').innerHTML = "";
+            }
+
+            if (valid) {
+                document.getElementById('demo').innerHTML = 'Bạn Đã Đăng Ký Thành Công!!!';
+                return true; // Submit the form
+            } else {
+                document.getElementById('demo').innerHTML = '';
+                return false; // Prevent form submission
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1 style="color: rgb(3, 3, 153);">Đăng kí du lịch</h1>
+    <form name="travelForm" onsubmit="return validateForm(event)" method="get">
+        <table align="center" border="1" cellpadding="0" cellspacing="0" width="650px" bordercolor="blue">
+            <tr>
+                <td style="color: rgb(4, 4, 149);">Họ và Tên</td>
+                <td>
+                    <label id="main">
+                        <input type="text" name="txtHoTen" size="50px">
+                        <div id="nameError" class="error"></div>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: rgb(4, 4, 149);">Địa chỉ</td>
+                <td>
+                    <label id="main1">
+                        <input type="text" name="txtDiaChi" size="40px">
+                        <div id="addressError" class="error"></div>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: rgb(4, 4, 149);">Điện Thoại</td>
+                <td>
+                    <label id="main3">
+                        <input type="text" name="txtSdt" size="30px">
+                        <div id="phoneError" class="error"></div>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: rgb(4, 4, 149);">Khách Việt Nam</td>
+                <td>
+                    <input type="checkbox" name="ckKhachHang" value="Bike">
+                    <div id="checkboxError" class="error"></div>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: rgb(4, 4, 149);">Chọn Tour</td>
+                <td>
+                    <select name="Tour" id="Tour">
+                        <option value="bs">Buôn mê thuột - Gia lai - kontum</option>
+                        <option value="bs">Thanh hóa</option>
+                        <option value="bs">Hà nội</option>
+                        <option value="bs">Nghệ An</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <fieldset style="width:300px;border-color: rgba(230, 38, 38, 0.39);margin-bottom:10px">
+                        <legend>Số lượng đoàn khách</legend>
+                        <label for="people">Người lớn</label>
+                        <input name="people" id="txtPeople" size="5">
+                        <div id="adultsError" class="error"></div>
+                        <label for="Children">Trẻ em</label>
+                        <input name="Children" id="txtChildren" size="5">
+                        <div id="childrenError" class="error"></div>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: rgb(4, 4, 149);">Phương tiện</td>
+                <td>
+                    <input type="radio" name="gender" value="maybay"> Máy Bay
+                    <input type="radio" name="gender" value="xeoto" checked> Xe ô tô
+                </td>
+            </tr>
+            <tr>
+                <td style="color: rgb(4, 4, 149);">Ghi chú thêm</td>
+                <td><textarea name="txtComment" rows="4" cols="50" style="width: 300px;"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="1" style="text-align: center;">
+                    <button type="submit">Đồng Ý</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="1" style="text-align: center; color:red" id="demo"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
